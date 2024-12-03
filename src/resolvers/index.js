@@ -7,6 +7,8 @@ const FIELD_VALUE = 'field-value'
 const FIELD_PROJECT = 'field-project'
 const FIELD_OPERATOR = 'field-operator'
 const FIELD_VALUE_CONTENT = 'field-value-content'
+const FIELD_ONLY_ROW = 'field-only-row'
+const FIELD_ONLY_COLUMN = 'field-only-column'
 
 resolver.define('getText', (req) => {
     console.log(req)
@@ -84,6 +86,9 @@ const doComparisons = async (filters, context) => {
     const rows = []
     for (let i = 0; i < filters.length; i++) {
         let currentFilter = filters[i]
+        if (currentFilter[FIELD_ONLY_COLUMN]) {
+            continue
+        }
         let currentFilterCells = [
             {
                 key: 'label',
@@ -93,6 +98,9 @@ const doComparisons = async (filters, context) => {
         let totalCount = 0
         for (let j = 0; j < filters.length; j++) {
             let otherFilter = filters[j]
+            if (otherFilter[FIELD_ONLY_ROW]) {
+                continue
+            }
             const comparisonFilters = [currentFilter, otherFilter]
             const jql = JQLBuilder(comparisonFilters)
             console.log('JQL: ', jql)
@@ -142,6 +150,9 @@ const obtainColumns = (filters) => {
     }
 
     filters.map((filter) => {
+        if (filter[FIELD_ONLY_ROW]) {
+            return
+        }
         const cell = {
             key: filter[FIELD_VALUE_CONTENT],
             content: filter[FIELD_VALUE_CONTENT],

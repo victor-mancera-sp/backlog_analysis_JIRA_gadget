@@ -2,6 +2,7 @@ import { invoke, view } from '@forge/bridge'
 import ForgeReconciler, {
     Button,
     ButtonGroup,
+    Checkbox,
     DynamicTable,
     Form,
     FormFooter,
@@ -22,8 +23,8 @@ const FIELD_VALUE = 'field-value'
 const FIELD_PROJECT = 'field-project'
 const FIELD_OPERATOR = 'field-operator'
 const FIELD_VALUE_CONTENT = 'field-value-content'
-
-const fields_that_requires_quoation_marks = ['Status']
+const FIELD_ONLY_ROW = 'field-only-row'
+const FIELD_ONLY_COLUMN = 'field-only-column'
 
 const operators = [
     {
@@ -65,7 +66,6 @@ export const Edit = () => {
     const {
         handleSubmit,
         control,
-        getValues,
         formState: { errors },
     } = useForm()
 
@@ -115,6 +115,8 @@ export const Edit = () => {
             [FIELD_VALUE]: '',
             [FIELD_OPERATOR]: '',
             [FIELD_VALUE_CONTENT]: '',
+            [FIELD_ONLY_ROW]: false,
+            [FIELD_ONLY_COLUMN]: false,
         })
     }
 
@@ -253,6 +255,32 @@ const FilterFormSection = ({
                 )}
             />
             {errors[FIELD_VALUE_CONTENT] && <Text>This field is required</Text>}
+            <Label>Only Row</Label>
+            <Controller
+                control={control}
+                name={'filters.' + index + '.' + FIELD_ONLY_ROW}
+                render={({ field: { ...field } }) => (
+                    <Checkbox
+                        id={field.id}
+                        value={field.value ? 'checked' : 'default'}
+                        onChange={field.onChange}
+                        isChecked={field.value}
+                    />
+                )}
+            />
+            <Label>Only Column</Label>
+            <Controller
+                control={control}
+                name={'filters.' + index + '.' + FIELD_ONLY_COLUMN}
+                render={({ field: { ...field } }) => (
+                    <Checkbox
+                        id={field.id}
+                        value={field.value ? 'checked' : 'default'}
+                        onChange={field.onChange}
+                        isChecked={field.value}
+                    />
+                )}
+            />
             <Button appearance="secondary" onClick={() => remove(index)}>
                 Remove filter
             </Button>
