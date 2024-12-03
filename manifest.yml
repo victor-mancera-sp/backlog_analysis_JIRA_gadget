@@ -1,0 +1,27 @@
+modules:
+  jira:dashboardGadget:
+    - key: backlog-analysis-dashboard-gadget-ui-kit-2-hello-world-gadget
+      title: backlog_analysis
+      description: A hello world dashboard gadget.
+      thumbnail: https://developer.atlassian.com/platform/forge/images/icons/issue-panel-icon.svg
+      resource: main-resource
+      render: native
+      resolver:
+        function: resolver
+      edit:
+        resource: main-resource
+        render: native
+  function:
+    - key: resolver
+      handler: index.handler
+resources:
+  - key: main-resource
+    path: src/frontend/index.jsx
+app:
+  runtime:
+    name: nodejs20.x
+  id: ari:cloud:ecosystem::app/937c82ed-bcb8-440e-8a72-b9460ad72264
+
+permissions:
+  scopes:
+    - 'read:jira-work'  

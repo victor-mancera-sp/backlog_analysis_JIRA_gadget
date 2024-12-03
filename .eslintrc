@@ -1,0 +1,21 @@
+{
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2023,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "react-hooks",
+    "ft-flow"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:ft-flow/recommended",
+    "prettier"
+  ]
+}

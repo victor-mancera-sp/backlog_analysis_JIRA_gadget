@@ -1,0 +1,34 @@
+{
+  "name": "jira-dashboard-gadget-ui-kit-2",
+  "version": "1.0.41",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "babel src/ -d lib/",
+    "prepublish": "npm run build",
+    "lint": "./node_modules/.bin/eslint src/**/* || npm run --silent hook-errors",
+    "hook-errors": "echo '\\x1b[31mThe build failed because a Forge UI hook is being used incorrectly. Forge UI hooks follow the same rules as React Hooks but have their own API definitions. See the Forge documentation for details on how to use Forge UI hooks.\n' && exit 1",
+    "flow": "flow"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-flow": "^7.25.9",
+    "babel-plugin-syntax-hermes-parser": "^0.25.1",
+    "eslint": "^8.57.1",
+    "eslint-plugin-ft-flow": "^3.0.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "flow-bin": "^0.255.0",
+    "hermes-eslint": "^0.25.1"
+  },
+  "dependencies": {
+    "@forge/bridge": "4.1.1",
+    "@forge/react": "10.8.0",
+    "@forge/resolver": "1.6.2",
+    "eslint-config-prettier": "^9.1.0",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-hook-form": "^7.53.2"
+  }
+}
