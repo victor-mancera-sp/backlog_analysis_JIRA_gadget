@@ -128,8 +128,6 @@ export const Edit = () => {
         extension: { gadgetConfiguration },
     } = context
 
-    console.log('GadgetConfiguration: ', JSON.stringify(gadgetConfiguration))
-
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             {projects.length === 0 || ticketFields === 0 ? (

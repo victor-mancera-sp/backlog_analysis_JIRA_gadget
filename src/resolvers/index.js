@@ -41,18 +41,12 @@ resolver.define('getIssuesData', async (req) => {
         return
     }
 
-    console.log('CONTEXT: ' + JSON.stringify(req.context))
-
     const submittedFilters =
         req.context.extension.gadgetConfiguration.submittedFilters
 
     const columns = obtainColumns(submittedFilters)
 
-    console.log('Columns: ', JSON.stringify(columns))
-
     const rows = await doComparisons(submittedFilters, req.context)
-
-    console.log('Data Comparisons: ', JSON.stringify(rows))
 
     const data = {
         head: columns,
@@ -73,8 +67,7 @@ resolver.define('getFields', async () => {
     }
 
     const json = await response.json()
-    console.log('Response to get fields: ', json)
-    // return an array of objects, where each object has a label and value from the name property of the json
+
     const fields = json.map((field) => ({
         label: field.name,
         value: field.name,
@@ -103,7 +96,6 @@ const doComparisons = async (filters, context) => {
             }
             const comparisonFilters = [currentFilter, otherFilter]
             const jql = JQLBuilder(comparisonFilters)
-            console.log('JQL: ', jql)
             const response = await searchByJQL(jql)
             currentFilterCells.push({
                 key: otherFilter[FIELD_VALUE_CONTENT],
@@ -135,7 +127,6 @@ const searchByJQL = async (jql) => {
         throw new Error(response.statusText)
     }
     const jsonResponse = await response.json()
-    console.log('Response from Search API', jsonResponse)
     return jsonResponse
 }
 
@@ -171,7 +162,6 @@ const JQLBuilder = (filters) => {
     }
 
     let jql = 'PROJECT = ' + filters[0][FIELD_PROJECT].value
-    console.log('Filters: ', JSON.stringify(filters))
 
     filters.map((filter) => {
         jql += ` AND ${filter[FIELD_VALUE].value} ${filter[FIELD_OPERATOR].value} ${filter[FIELD_VALUE_CONTENT]}`
